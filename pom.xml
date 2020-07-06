@@ -51,7 +51,7 @@
 		<mockito.version>3.2.4</mockito.version>
 		<!-- Logger test -->
 		<log4j.bridge.version>2.9.0</log4j.bridge.version>
-		<log4j.version>2.11.1</log4j.version>
+		<log4j.version>2.13.3</log4j.version>
 		<vlcj.version>3.0.1</vlcj.version>
 	</properties>
 
