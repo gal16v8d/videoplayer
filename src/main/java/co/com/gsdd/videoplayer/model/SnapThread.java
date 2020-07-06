@@ -9,9 +9,8 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implements an independient thread for take the snapshot, because if the snapshot run on application thread you will
- * no able to use the menu or properly close the application until the snapshot over, implement as a thread solves that
- * issue.
+ * Implements a thread for take the snapshot, because if the snapshot run on application thread you will no able to use
+ * the menu or properly close the application until the snapshot over, implement as a thread solves that issue.
  * 
  * @author Great System Development Dynamic [GSDD] <br>
  *         Alexander Galvis Grisales <br>
@@ -31,6 +30,7 @@ public class SnapThread extends Thread {
      * Time between capture/snapshot.
      */
     private Long sleep;
+    private VLCPlayerController controller;
 
     /**
      * A basic construct method for thread.
@@ -40,10 +40,12 @@ public class SnapThread extends Thread {
      *            the video/audio local route.
      * @param sleep
      *            time between captures
+     * @param controller
      */
-    public SnapThread(String route, Long sleep) {
+    public SnapThread(String route, Long sleep, VLCPlayerController controller) {
         this.route = route;
         this.sleep = sleep != null ? sleep : ConstantsPlayer.TIME_CAPTURES;
+        this.controller = controller;
     }
 
     /**
@@ -63,16 +65,15 @@ public class SnapThread extends Thread {
     @Override
     public void run() {
         try {
-            VLCPlayerController.getInstance();
-            // Substract the file name for the folder separator.
+            // Subtract the file name for the folder separator.
             String folderName = route.substring(route.lastIndexOf(File.separator));
             for (Integer i = 1; i < (ConstantsPlayer.CAPTURES + 1); i++) {
-                VLCPlayerController.getInstance().getModel().getMediaPlayerComponent().getMediaPlayer()
+                getController().getMediaPlayerComponent().getMediaPlayer()
                         .saveSnapshot(new File(ConstantsPlayer.ROUTE_OUT + File.separator + folderName + File.separator
                                 + ConstantsPlayer.SNAPSHOT_PREFIX + i + ConstantsPlayer.SNAPSHOT_EXT));
                 Thread.sleep(sleep);
             }
-            VLCPlayerController.getInstance().stopVideo();
+            getController().stopVideo();
         } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
             Thread.currentThread().interrupt();

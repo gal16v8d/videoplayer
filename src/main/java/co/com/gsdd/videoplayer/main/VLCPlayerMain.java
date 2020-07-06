@@ -7,6 +7,7 @@ import com.sun.jna.NativeLibrary;
 
 import co.com.gsdd.videoplayer.constants.ConstantsPlayer;
 import co.com.gsdd.videoplayer.controller.VLCPlayerController;
+import co.com.gsdd.videoplayer.view.VLCPlayerView;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -55,9 +56,7 @@ public class VLCPlayerMain {
         String searchPath = loadSearchPath(args);
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), searchPath);
         Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-        SwingUtilities.invokeLater(() -> {
-            VLCPlayerController.getInstance().setSleep(loadCaptureTime(args));
-        });
+        SwingUtilities.invokeLater(() -> new VLCPlayerView().getController().setSleep(loadCaptureTime(args)));
     }
 
     /**

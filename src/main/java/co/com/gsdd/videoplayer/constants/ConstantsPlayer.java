@@ -22,7 +22,7 @@ public final class ConstantsPlayer {
     /**
      * This property is for scan a found the required lib for VLC. (This is the path for libvlc.dll)
      */
-    public static final String VLC_LIB_PATH = validateRoute("D:/Program Files/VideoLAN/VLC/");
+    public static final String VLC_LIB_PATH = validateRoute("D:/Programas/VideoLAN/VLC/");
 
     // Properties for titles of the menu and menuitem in aplication.
 
