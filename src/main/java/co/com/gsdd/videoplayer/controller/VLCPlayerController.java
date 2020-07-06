@@ -7,15 +7,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import co.com.gsdd.videoplayer.constants.ConstantsPlayer;
 import co.com.gsdd.videoplayer.model.SnapThread;
-import co.com.gsdd.videoplayer.model.VLCPlayer;
 import co.com.gsdd.videoplayer.view.VLCPlayerView;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 
 /**
  * This class acts like a controller that get the resources of the model ( {@link VLCPlayer}) and interacts with view
- * ({@link VLCPlayerView}) to acomplished the objectives of the project.
+ * ({@link VLCPlayerView}) to accomplished the objectives of the project.
  * 
  * @author Great System Development Dynamic [GSDD] <br>
  *         Alexander Galvis Grisales <br>
@@ -28,13 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 public class VLCPlayerController {
 
     /**
-     * The view for the java application.
+     * Define the model to be used in the application.
      */
-    private VLCPlayerView view;
-    /**
-     * Define the model to be used in the aplication.
-     */
-    private VLCPlayer model;
+    private EmbeddedMediaPlayerComponent mediaPlayerComponent;
     /**
      * Define a thread for take the snapshots.
      */
@@ -45,23 +41,14 @@ public class VLCPlayerController {
     private Long sleep;
 
     /**
-     * Unique instance for this class.
-     */
-    public static final VLCPlayerController INSTANCE = new VLCPlayerController();
-
-    /**
      * A public construct method. Initialize the view and the model for work with.
      * 
      * @author Alexander Galvis
      * @since 1.0
      * @see VLCPlayer
-     * @see VLCPlayerView
-     * @see VLCPlayerView#setUpFrame(uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent)
      */
-    private VLCPlayerController() {
-        view = new VLCPlayerView();
-        model = new VLCPlayer();
-        view.setUpFrame(model.getMediaPlayerComponent());
+    public VLCPlayerController() {
+        mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
     }
 
     /**
@@ -96,9 +83,9 @@ public class VLCPlayerController {
      *            an absolute path to the video resource.
      */
     private void playVideoFromRoute(String route) {
-        Boolean play = model.getMediaPlayerComponent().getMediaPlayer().playMedia(route);
+        Boolean play = mediaPlayerComponent.getMediaPlayer().playMedia(route);
         log.info("{}:::{}", route, play);
-        log.info("Time: {}", model.getMediaPlayerComponent().getMediaPlayer().getTime());
+        log.info("Time: {}", mediaPlayerComponent.getMediaPlayer().getTime());
         takeSnapshot(route);
     }
 
@@ -115,7 +102,7 @@ public class VLCPlayerController {
         if (snap != null) {
             snap.interrupt();
         }
-        snap = new SnapThread(route, sleep);
+        snap = new SnapThread(route, sleep, this);
         snap.start();
     }
 
@@ -127,9 +114,9 @@ public class VLCPlayerController {
      * @see SnapThread
      */
     public void stopVideo() {
-        if (model.getMediaPlayerComponent().getMediaPlayer().isPlaying()) {
+        if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             log.info(ConstantsPlayer.LOGGER_VIDEO_STOP);
-            model.getMediaPlayerComponent().getMediaPlayer().stop();
+            mediaPlayerComponent.getMediaPlayer().stop();
             if (snap != null) {
                 snap.interrupt();
             }
@@ -143,11 +130,11 @@ public class VLCPlayerController {
      * @since 1.0
      */
     public void muteVideo() {
-        if (model.getMediaPlayerComponent().getMediaPlayer().isPlaying()) {
-            if (model.getMediaPlayerComponent().getMediaPlayer().isMute()) {
-                model.getMediaPlayerComponent().getMediaPlayer().mute(Boolean.FALSE);
+        if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            if (mediaPlayerComponent.getMediaPlayer().isMute()) {
+                mediaPlayerComponent.getMediaPlayer().mute(Boolean.FALSE);
             } else {
-                model.getMediaPlayerComponent().getMediaPlayer().mute(Boolean.TRUE);
+                mediaPlayerComponent.getMediaPlayer().mute(Boolean.TRUE);
             }
         }
     }
@@ -161,13 +148,6 @@ public class VLCPlayerController {
         log.info(ConstantsPlayer.LOGGER_EXIT);
         stopVideo();
         System.exit(0);
-    }
-
-    /**
-     * @return the instance
-     */
-    public static VLCPlayerController getInstance() {
-        return INSTANCE;
     }
 
 }

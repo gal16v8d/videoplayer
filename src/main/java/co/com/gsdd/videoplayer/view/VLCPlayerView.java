@@ -9,10 +9,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import javax.swing.WindowConstants;
 
 import co.com.gsdd.videoplayer.constants.ConstantsPlayer;
 import co.com.gsdd.videoplayer.controller.VLCPlayerController;
 import co.com.gsdd.videoplayer.enums.MenuOptionEnum;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 
@@ -26,6 +28,7 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
  * @since 1.0
  */
 @Slf4j
+@Getter
 public class VLCPlayerView extends JFrame {
 
     /**
@@ -33,30 +36,15 @@ public class VLCPlayerView extends JFrame {
      */
     private static final long serialVersionUID = 1L;
     /**
-     * A menu object for the frame.
-     */
-    private JMenu menuAdmon;
-    /**
-     * A menuitem for choose the video file to open.
-     */
-    private JMenuItem itemFile;
-    /**
-     * A menuitem for mute/un-mute the current video (only works if is currently playing).
-     */
-    private JMenuItem itemMute;
-    /**
-     * A menuitem for stop the current video (only works if is currently playing).
-     */
-    private JMenuItem itemStop;
-    /**
-     * A menuitem for exit the aplication.
-     */
-    private JMenuItem itemOut;
-
-    /**
      * The title for the jframe.
      */
     private static final String FRAME_TITLE = "Java Video Player";
+    private VLCPlayerController controller;
+
+    public VLCPlayerView() {
+        controller = new VLCPlayerController();
+        setUpFrame(controller.getMediaPlayerComponent());
+    }
 
     /**
      * Set to frame the properties that will be need to show.
@@ -65,14 +53,14 @@ public class VLCPlayerView extends JFrame {
      * @param mediaPlayerComponent
      *            the component to play audio/video that will be add to the container of the frame.
      */
-    public void setUpFrame(EmbeddedMediaPlayerComponent mediaPlayerComponent) {
+    private final void setUpFrame(EmbeddedMediaPlayerComponent mediaPlayerComponent) {
         // Maximize to fit screen size.
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setTitle(FRAME_TITLE);
         setContentPane(mediaPlayerComponent);
         setLocation(0, 0);
         setSize(screenSize.width, screenSize.height);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         buildMenu();
         setVisible(true);
     }
@@ -87,16 +75,16 @@ public class VLCPlayerView extends JFrame {
     private void buildMenu() {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
-        menuAdmon = new JMenu(ConstantsPlayer.MENU_TITLE);
+        JMenu menuAdmon = new JMenu(ConstantsPlayer.MENU_TITLE);
         menuBar.add(menuAdmon);
-        itemFile = new JMenuItem(ConstantsPlayer.MENU_ITEM_FILE);
-        itemFile.addActionListener((evt) -> selectOption(MenuOptionEnum.FILE));
-        itemMute = new JMenuItem(ConstantsPlayer.MENU_ITEM_MUTE);
-        itemMute.addActionListener((evt) -> selectOption(MenuOptionEnum.MUTE));
-        itemStop = new JMenuItem(ConstantsPlayer.MENU_ITEM_STOP);
-        itemStop.addActionListener((evt) -> selectOption(MenuOptionEnum.STOP));
-        itemOut = new JMenuItem(ConstantsPlayer.MENU_ITEM_OUT);
-        itemOut.addActionListener((evt) -> selectOption(MenuOptionEnum.OUT));
+        JMenuItem itemFile = new JMenuItem(ConstantsPlayer.MENU_ITEM_FILE);
+        itemFile.addActionListener(evt -> selectOption(MenuOptionEnum.FILE));
+        JMenuItem itemMute = new JMenuItem(ConstantsPlayer.MENU_ITEM_MUTE);
+        itemMute.addActionListener(evt -> selectOption(MenuOptionEnum.MUTE));
+        JMenuItem itemStop = new JMenuItem(ConstantsPlayer.MENU_ITEM_STOP);
+        itemStop.addActionListener(evt -> selectOption(MenuOptionEnum.STOP));
+        JMenuItem itemOut = new JMenuItem(ConstantsPlayer.MENU_ITEM_OUT);
+        itemOut.addActionListener(evt -> selectOption(MenuOptionEnum.OUT));
 
         menuAdmon.add(itemFile);
         menuAdmon.add(new JSeparator());
@@ -128,16 +116,16 @@ public class VLCPlayerView extends JFrame {
     private void selectOption(MenuOptionEnum op) {
         switch (op) {
         case FILE:
-            VLCPlayerController.getInstance().chooseFile();
+            getController().chooseFile();
             break;
         case MUTE:
-            VLCPlayerController.getInstance().muteVideo();
+            getController().muteVideo();
             break;
         case STOP:
-            VLCPlayerController.getInstance().stopVideo();
+            getController().stopVideo();
             break;
         case OUT:
-            VLCPlayerController.getInstance().exit();
+            getController().exit();
             break;
         default:
             break;
