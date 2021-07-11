@@ -43,11 +43,11 @@
 		<jacoco.it.exec>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.exec>
 		<jacoco.it.reportPath>${project.build.directory}/coverage-reports/jacoco-it</jacoco.it.reportPath>
 
-		<lombok.version>1.18.12</lombok.version>
+		<lombok.version>1.18.20</lombok.version>
 		<!-- Logger api -->
 		<slf4j.version>1.7.25</slf4j.version>
 		<!-- test dependencies -->
-		<junit.version>5.5.2</junit.version>
+		<junit.version>5.7.2</junit.version>
 		<mockito.version>3.2.4</mockito.version>
 		<!-- Logger test -->
 		<log4j.bridge.version>2.9.0</log4j.bridge.version>
