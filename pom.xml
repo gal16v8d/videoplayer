@@ -3,15 +3,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>co.com.gsdd</groupId>
+	<groupId>com.gsdd</groupId>
 	<artifactId>videoplayer</artifactId>
 	<version>1.0.001</version>
 	<packaging>jar</packaging>
 
+	<name>videoplayer</name>
 	<organization>
 		<name>GSDD</name>
 	</organization>
-	<name>videoplayer</name>
 
 	<properties>
 		<project.encoding>UTF-8</project.encoding>
@@ -24,7 +24,7 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<mvn.compiler.plugin.version>3.8.1</mvn.compiler.plugin.version>
-		<mvn.jacoco.plugin.version>0.8.5</mvn.jacoco.plugin.version>
+		<mvn.jacoco.plugin.version>0.8.7</mvn.jacoco.plugin.version>
 		<mvn.failsafe.plugin.version>3.0.0-M4</mvn.failsafe.plugin.version>
 		<mvn.surefire.plugin.version>3.0.0-M4</mvn.surefire.plugin.version>
 		<mvn.javadoc.plugin.version>3.1.1</mvn.javadoc.plugin.version>
@@ -43,15 +43,14 @@
 		<jacoco.it.exec>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.exec>
 		<jacoco.it.reportPath>${project.build.directory}/coverage-reports/jacoco-it</jacoco.it.reportPath>
 
-		<lombok.version>1.18.20</lombok.version>
+		<lombok.version>1.18.22</lombok.version>
 		<!-- Logger api -->
-		<slf4j.version>1.7.25</slf4j.version>
+		<slf4j.version>1.7.32</slf4j.version>
 		<!-- test dependencies -->
 		<junit.version>5.7.2</junit.version>
 		<mockito.version>3.2.4</mockito.version>
 		<!-- Logger test -->
-		<log4j.bridge.version>2.9.0</log4j.bridge.version>
-		<log4j.version>2.13.3</log4j.version>
+		<log4j.version>2.15.0</log4j.version>
 		<vlcj.version>3.0.1</vlcj.version>
 	</properties>
 
@@ -89,7 +88,7 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
-			<version>${log4j.bridge.version}</version>
+			<version>${log4j.version}</version>
 		</dependency>
 
 		<dependency>
@@ -249,6 +248,9 @@
 				<groupId>net.revelc.code.formatter</groupId>
 				<artifactId>formatter-maven-plugin</artifactId>
 				<version>${mvn.format.plugin.version}</version>
+				<configuration>
+					<configFile>${project.basedir}/eclipse-java-google-style.xml</configFile>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -295,7 +297,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>co.com.gsdd.videoplayer.main.VLCPlayerMain</mainClass>
+							<mainClass>com.gsdd.videoplayer.main.VLCPlayerMain</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
