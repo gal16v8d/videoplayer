@@ -1,5 +1,8 @@
 package com.gsdd.videoplayer.view;
 
+import com.gsdd.videoplayer.constants.ConstantsPlayer;
+import com.gsdd.videoplayer.controller.VLCPlayerController;
+import com.gsdd.videoplayer.enums.MenuOptionEnum;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
@@ -9,9 +12,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.WindowConstants;
-import com.gsdd.videoplayer.constants.ConstantsPlayer;
-import com.gsdd.videoplayer.controller.VLCPlayerController;
-import com.gsdd.videoplayer.enums.MenuOptionEnum;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
@@ -19,24 +19,21 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 /**
  * This class define the graphic components to be used. Basically are a frame with a menu bar that
  * hava the choices for the program.
- * 
+ *
  * @author Great System Development Dynamic [GSDD] <br>
- *         Alexander Galvis Grisales <br>
- *         alex.galvis.sistemas@gmail.com <br>
+ *     Alexander Galvis Grisales <br>
+ *     alex.galvis.sistemas@gmail.com <br>
  * @since 1.0
  */
 @Slf4j
 @Getter
 public class VLCPlayerView extends JFrame {
 
-  /**
-   * Default serial version for the class.
-   */
+  /** Default serial version for the class. */
   private static final long serialVersionUID = 1L;
-  /**
-   * The title for the jframe.
-   */
+  /** The title for the jframe. */
   private static final String FRAME_TITLE = "Java Video Player";
+
   private VLCPlayerController controller;
 
   public VLCPlayerView() {
@@ -46,12 +43,12 @@ public class VLCPlayerView extends JFrame {
 
   /**
    * Set to frame the properties that will be need to show.
-   * 
+   *
    * @since 1.0
    * @param mediaPlayerComponent the component to play audio/video that will be add to the container
-   *        of the frame.
+   *     of the frame.
    */
-  private final void setUpFrame(EmbeddedMediaPlayerComponent mediaPlayerComponent) {
+  private void setUpFrame(EmbeddedMediaPlayerComponent mediaPlayerComponent) {
     // Maximize to fit screen size.
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     setTitle(FRAME_TITLE);
@@ -65,7 +62,7 @@ public class VLCPlayerView extends JFrame {
 
   /**
    * Create the menu for the frame.
-   * 
+   *
    * @since 1.0
    * @see ConstantsPlayer
    * @see MenuOptionEnum
@@ -103,10 +100,10 @@ public class VLCPlayerView extends JFrame {
    * Select an option of menu for execute an action, it depends of {@link MenuOptionEnum} what do
    * you need to choose. The action will call an instance of {@link VLCPlayerController} to be
    * executed.
-   * <p>
-   * This method will execute one of three actions like open a filechooser, stop a current playing
-   * video or exit the program.
-   * 
+   *
+   * <p>This method will execute one of three actions like open a filechooser, stop a current
+   * playing video or exit the program.
+   *
    * @since 1.0
    * @param op the choose for make an action.
    * @see MenuOptions.
@@ -129,5 +126,4 @@ public class VLCPlayerView extends JFrame {
         break;
     }
   }
-
 }
