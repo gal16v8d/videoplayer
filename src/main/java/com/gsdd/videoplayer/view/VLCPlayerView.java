@@ -110,20 +110,11 @@ public class VLCPlayerView extends JFrame {
    */
   private void selectOption(MenuOptionEnum op) {
     switch (op) {
-      case FILE:
-        getController().chooseFile();
-        break;
-      case MUTE:
-        getController().muteVideo();
-        break;
-      case STOP:
-        getController().stopVideo();
-        break;
-      case OUT:
-        getController().exit();
-        break;
-      default:
-        break;
+      case FILE -> getController().chooseFile();
+      case MUTE -> getController().muteVideo();
+      case STOP -> getController().stopVideo();
+      case OUT -> getController().exit();
+      default -> throw new IllegalArgumentException("Not Implemented");
     }
   }
 }
