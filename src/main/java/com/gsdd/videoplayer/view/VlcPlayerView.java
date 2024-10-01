@@ -1,10 +1,11 @@
 package com.gsdd.videoplayer.view;
 
 import com.gsdd.videoplayer.constants.ConstantsPlayer;
-import com.gsdd.videoplayer.controller.VLCPlayerController;
+import com.gsdd.videoplayer.controller.VlcPlayerController;
 import com.gsdd.videoplayer.enums.MenuOptionEnum;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.Serial;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -27,17 +28,18 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
  */
 @Slf4j
 @Getter
-public class VLCPlayerView extends JFrame {
+public class VlcPlayerView extends JFrame {
 
   /** Default serial version for the class. */
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
+
   /** The title for the jframe. */
   private static final String FRAME_TITLE = "Java Video Player";
 
-  private VLCPlayerController controller;
+  private final VlcPlayerController controller;
 
-  public VLCPlayerView() {
-    controller = new VLCPlayerController();
+  public VlcPlayerView() {
+    controller = new VlcPlayerController();
     setUpFrame(controller.getMediaPlayerComponent());
   }
 
@@ -97,8 +99,8 @@ public class VLCPlayerView extends JFrame {
   }
 
   /**
-   * Select an option of menu for execute an action, it depends of {@link MenuOptionEnum} what do
-   * you need to choose. The action will call an instance of {@link VLCPlayerController} to be
+   * Select an option of menu for execute an action, it depends on {@link MenuOptionEnum} what do
+   * you need to choose. The action will call an instance of {@link VlcPlayerController} to be
    * executed.
    *
    * <p>This method will execute one of three actions like open a filechooser, stop a current
@@ -106,7 +108,7 @@ public class VLCPlayerView extends JFrame {
    *
    * @since 1.0
    * @param op the choose for make an action.
-   * @see MenuOptions.
+   * @see MenuOptionEnum
    */
   private void selectOption(MenuOptionEnum op) {
     switch (op) {

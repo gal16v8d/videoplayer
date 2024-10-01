@@ -2,8 +2,8 @@ package com.gsdd.videoplayer.constants;
 
 import java.io.File;
 import java.util.regex.Matcher;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import java.util.stream.Stream;
+import lombok.experimental.UtilityClass;
 
 /**
  * The main objective of this class is to store the basic constants needed for the application to
@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
  *     alex.galvis.sistemas@gmail.com <br>
  * @since 1.0
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 public final class ConstantsPlayer {
 
   /**
    * This property is for scan a found the required lib for VLC. (This is the path for libvlc.dll)
    */
-  public static final String VLC_LIB_PATH = validateRoute("D:/Programas/VideoLAN/VLC/");
+  public static final String VLC_LIB_PATH = validateRoute(null);
 
   // Properties for titles of the menu and menuitem in aplication.
 
@@ -60,7 +60,7 @@ public final class ConstantsPlayer {
   public static final String CHOOSE_DESC = "FileInput filtered: avi, wmv, mkv, mp4, flv, rmvb";
 
   /** Array of ext filter to be implemented in the chooser. */
-  protected static final String[] FILTER_INPUT = {"avi", "wmv", "mkv", "mp4", "flv", "rmvb"};
+  static final String[] FILTER_INPUT = {"avi", "wmv", "mkv", "mp4", "flv", "rmvb"};
 
   // This properties will be used to take and store snapshot.
 
@@ -82,19 +82,38 @@ public final class ConstantsPlayer {
   /** File route out if not defined will be the user home. */
   public static final String ROUTE_OUT = System.getProperty("user.home");
 
+  public static final String OS_NAME = "os.name";
+  public static final String OS_MAC = "mac";
+  public static final String OS_WIN = "win";
+
   /**
    * This method allows to get a route even with SO differences.
    *
    * @since 1.0
-   * @param route the route to normalize.
    * @return a normalized route.
    */
   public static String validateRoute(String route) {
-    String r = route.replaceAll(EXPRESION_SLASH, Matcher.quoteReplacement(File.separator));
+    var osName = System.getProperty(OS_NAME).toLowerCase();
+    var safeRoute = route == null ? getPathByOs(osName) : route;
+    String r = safeRoute.replaceAll(EXPRESION_SLASH, Matcher.quoteReplacement(File.separator));
     if (!r.endsWith(File.separator)) {
       r += File.separator;
     }
     return r;
+  }
+
+  private static String getPathByOs(String osName) {
+    String result;
+    if (osName.contains(OS_WIN)) {
+      result = "D:/Programas/VideoLAN/VLC/";
+    } else if (osName.contains(OS_MAC)) {
+      result = "/usr/lib/vlc";
+    } else if (Stream.of("nix", "nux", "ubuntu").anyMatch(osName::contains)) {
+      result = "/usr/lib/vlc";
+    } else {
+      result = null;
+    }
+    return result;
   }
 
   /**

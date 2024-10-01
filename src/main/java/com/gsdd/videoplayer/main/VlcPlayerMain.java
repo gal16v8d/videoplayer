@@ -1,7 +1,7 @@
 package com.gsdd.videoplayer.main;
 
 import com.gsdd.videoplayer.constants.ConstantsPlayer;
-import com.gsdd.videoplayer.view.VLCPlayerView;
+import com.gsdd.videoplayer.view.VlcPlayerView;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 import javax.swing.SwingUtilities;
@@ -41,7 +41,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
  * @since 1.0
  */
 @Slf4j
-public class VLCPlayerMain {
+public class VlcPlayerMain {
 
   /**
    * Main method for the application.
@@ -49,7 +49,7 @@ public class VLCPlayerMain {
    * @since 1.0
    * @param args the arg to be received. This wil be used to receipt the VLCLIBPATH, if no arguments
    *     {@link ConstantsPlayer#VLC_LIB_PATH} will be the default value.
-   * @see VLCPlayerController
+   * @see com.gsdd.videoplayer.controller.VlcPlayerController
    * @see ConstantsPlayer
    */
   public static void main(final String[] args) {
@@ -57,7 +57,7 @@ public class VLCPlayerMain {
     NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), searchPath);
     Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
     SwingUtilities.invokeLater(
-        () -> new VLCPlayerView().getController().setSleep(loadCaptureTime(args)));
+        () -> new VlcPlayerView().getController().setSleep(loadCaptureTime(args)));
   }
 
   /**

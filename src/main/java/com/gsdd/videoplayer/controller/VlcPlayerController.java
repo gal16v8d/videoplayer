@@ -2,6 +2,7 @@ package com.gsdd.videoplayer.controller;
 
 import com.gsdd.videoplayer.constants.ConstantsPlayer;
 import com.gsdd.videoplayer.model.SnapThread;
+import com.gsdd.videoplayer.view.VlcPlayerView;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -11,8 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 
 /**
- * This class acts like a controller that get the resources of the model ( {@link VLCPlayer}) and
- * interacts with view ({@link VLCPlayerView}) to accomplished the objectives of the project.
+ * This class acts like a controller that get the resources of the model ( {@link SnapThread}) and
+ * interacts with view ({@link VlcPlayerView}) to accomplish the objectives of the project.
  *
  * @author Great System Development Dynamic [GSDD] <br>
  *     Alexander Galvis Grisales <br>
@@ -22,12 +23,14 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 @Slf4j
 @Getter
 @Setter
-public class VLCPlayerController {
+public class VlcPlayerController {
 
   /** Define the model to be used in the application. */
   private EmbeddedMediaPlayerComponent mediaPlayerComponent;
+
   /** Define a thread for take the snapshots. */
   private SnapThread snap;
+
   /** Define the sleep time. */
   private Long sleep;
 
@@ -38,7 +41,7 @@ public class VLCPlayerController {
    * @since 1.0
    * @see VLCPlayer
    */
-  public VLCPlayerController() {
+  public VlcPlayerController() {
     mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
   }
 

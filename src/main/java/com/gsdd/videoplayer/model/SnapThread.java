@@ -1,7 +1,7 @@
 package com.gsdd.videoplayer.model;
 
 import com.gsdd.videoplayer.constants.ConstantsPlayer;
-import com.gsdd.videoplayer.controller.VLCPlayerController;
+import com.gsdd.videoplayer.controller.VlcPlayerController;
 import java.io.File;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,10 +24,11 @@ public class SnapThread extends Thread {
 
   /** Route of current video playing. */
   private String route;
+
   /** Time between capture/snapshot. */
   private Long sleep;
 
-  private VLCPlayerController controller;
+  private VlcPlayerController controller;
 
   /**
    * A basic construct method for thread.
@@ -37,7 +38,7 @@ public class SnapThread extends Thread {
    * @param sleep time between captures
    * @param controller
    */
-  public SnapThread(String route, Long sleep, VLCPlayerController controller) {
+  public SnapThread(String route, Long sleep, VlcPlayerController controller) {
     this.route = route;
     this.sleep = sleep != null ? sleep : ConstantsPlayer.TIME_CAPTURES;
     this.controller = controller;
