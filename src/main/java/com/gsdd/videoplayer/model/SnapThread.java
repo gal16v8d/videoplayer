@@ -36,7 +36,7 @@ public class SnapThread extends Thread {
    * @since 1.0
    * @param route the video/audio local route.
    * @param sleep time between captures
-   * @param controller
+   * @param controller perform actions
    */
   public SnapThread(String route, Long sleep, VlcPlayerController controller) {
     this.route = route;
@@ -63,28 +63,33 @@ public class SnapThread extends Thread {
    */
   @Override
   public void run() {
-    try {
-      // Subtract the file name for the folder separator.
-      String folderName = route.substring(route.lastIndexOf(File.separator));
-      for (Integer i = 1; i < (ConstantsPlayer.CAPTURES + 1); i++) {
-        getController()
-            .getMediaPlayerComponent()
-            .getMediaPlayer()
-            .saveSnapshot(
-                new File(
-                    ConstantsPlayer.ROUTE_OUT
-                        + File.separator
-                        + folderName
-                        + File.separator
-                        + ConstantsPlayer.SNAPSHOT_PREFIX
-                        + i
-                        + ConstantsPlayer.SNAPSHOT_EXT));
-        Thread.sleep(sleep);
-      }
-      getController().stopVideo();
-    } catch (InterruptedException e) {
-      log.error(e.getMessage(), e);
-      Thread.currentThread().interrupt();
-    }
+    Thread.ofVirtual()
+        .start(
+            () -> {
+              try {
+                // Subtract the file name for the folder separator.
+                String folderName = route.substring(route.lastIndexOf(File.separator));
+
+                for (int i = 1; i < (ConstantsPlayer.CAPTURES + 1); i++) {
+                  getController()
+                      .getMediaPlayerComponent()
+                      .getMediaPlayer()
+                      .saveSnapshot(
+                          new File(
+                              ConstantsPlayer.ROUTE_OUT
+                                  + File.separator
+                                  + folderName
+                                  + File.separator
+                                  + ConstantsPlayer.SNAPSHOT_PREFIX
+                                  + i
+                                  + ConstantsPlayer.SNAPSHOT_EXT));
+                  Thread.sleep(sleep);
+                }
+                getController().stopVideo();
+              } catch (InterruptedException e) {
+                log.error(e.getMessage(), e);
+                Thread.currentThread().interrupt();
+              }
+            });
   }
 }

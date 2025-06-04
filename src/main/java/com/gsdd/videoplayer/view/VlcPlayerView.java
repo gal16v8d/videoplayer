@@ -33,7 +33,7 @@ public class VlcPlayerView extends JFrame {
   /** Default serial version for the class. */
   @Serial private static final long serialVersionUID = 1L;
 
-  /** The title for the jframe. */
+  /** The title for the frame. */
   private static final String FRAME_TITLE = "Java Video Player";
 
   private final VlcPlayerController controller;
@@ -47,8 +47,8 @@ public class VlcPlayerView extends JFrame {
    * Set to frame the properties that will be need to show.
    *
    * @since 1.0
-   * @param mediaPlayerComponent the component to play audio/video that will be add to the container
-   *     of the frame.
+   * @param mediaPlayerComponent the component to play audio/video that will be added to the
+   *     container of the frame.
    */
   private void setUpFrame(EmbeddedMediaPlayerComponent mediaPlayerComponent) {
     // Maximize to fit screen size.
@@ -72,8 +72,8 @@ public class VlcPlayerView extends JFrame {
   private void buildMenu() {
     JMenuBar menuBar = new JMenuBar();
     setJMenuBar(menuBar);
-    JMenu menuAdmon = new JMenu(ConstantsPlayer.MENU_TITLE);
-    menuBar.add(menuAdmon);
+    JMenu menuAdm = new JMenu(ConstantsPlayer.MENU_TITLE);
+    menuBar.add(menuAdm);
     JMenuItem itemFile = new JMenuItem(ConstantsPlayer.MENU_ITEM_FILE);
     itemFile.addActionListener(evt -> selectOption(MenuOptionEnum.FILE));
     JMenuItem itemMute = new JMenuItem(ConstantsPlayer.MENU_ITEM_MUTE);
@@ -83,13 +83,13 @@ public class VlcPlayerView extends JFrame {
     JMenuItem itemOut = new JMenuItem(ConstantsPlayer.MENU_ITEM_OUT);
     itemOut.addActionListener(evt -> selectOption(MenuOptionEnum.OUT));
 
-    menuAdmon.add(itemFile);
-    menuAdmon.add(new JSeparator());
-    menuAdmon.add(itemMute);
-    menuAdmon.add(new JSeparator());
-    menuAdmon.add(itemStop);
-    menuAdmon.add(new JSeparator());
-    menuAdmon.add(itemOut);
+    menuAdm.add(itemFile);
+    menuAdm.add(new JSeparator());
+    menuAdm.add(itemMute);
+    menuAdm.add(new JSeparator());
+    menuAdm.add(itemStop);
+    menuAdm.add(new JSeparator());
+    menuAdm.add(itemOut);
 
     try {
       setIconImage(new ImageIcon(getClass().getResource(ConstantsPlayer.IMAGE_MENU)).getImage());
@@ -103,7 +103,7 @@ public class VlcPlayerView extends JFrame {
    * you need to choose. The action will call an instance of {@link VlcPlayerController} to be
    * executed.
    *
-   * <p>This method will execute one of three actions like open a filechooser, stop a current
+   * <p>This method will execute one of three actions like open a file chooser, stop a current
    * playing video or exit the program.
    *
    * @since 1.0

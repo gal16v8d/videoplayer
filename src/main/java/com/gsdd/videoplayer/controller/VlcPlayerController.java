@@ -2,7 +2,6 @@ package com.gsdd.videoplayer.controller;
 
 import com.gsdd.videoplayer.constants.ConstantsPlayer;
 import com.gsdd.videoplayer.model.SnapThread;
-import com.gsdd.videoplayer.view.VlcPlayerView;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -13,7 +12,8 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 
 /**
  * This class acts like a controller that get the resources of the model ( {@link SnapThread}) and
- * interacts with view ({@link VlcPlayerView}) to accomplish the objectives of the project.
+ * interacts with view ({@link com.gsdd.videoplayer.view.VlcPlayerView}) to accomplish the
+ * objectives of the project.
  *
  * @author Great System Development Dynamic [GSDD] <br>
  *     Alexander Galvis Grisales <br>
@@ -39,15 +39,14 @@ public class VlcPlayerController {
    *
    * @author Alexander Galvis
    * @since 1.0
-   * @see VLCPlayer
    */
   public VlcPlayerController() {
     mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
   }
 
   /**
-   * This method allows to choose a video file {@link ConstantsPlayer#FILTER_INPUT} and if it is a
-   * valid video file begin the process to take the required snapshot.
+   * This method allows to choose a video file {@link ConstantsPlayer#getFilterInput()} and if it is
+   * a valid video file begin the process to take the required snapshot.
    *
    * <p>If nothing choose , nothing will happen.
    *
@@ -101,7 +100,7 @@ public class VlcPlayerController {
 
   /**
    * This method allows to stop the current playing video, also if the {@link SnapThread} is taking
-   * the captures will be interrupted. If there is not video playing nothign will happen.
+   * the captures will be interrupted. If there is no video playing nothing will happen.
    *
    * @since 1.0
    * @see SnapThread
@@ -117,8 +116,8 @@ public class VlcPlayerController {
   }
 
   /**
-   * This method allows to mute/un-mute the current video playing. If the video is not currently
-   * playing nothing will happen. If the current video is mute the action will be un-mute.
+   * This method allows to mute/unmute the current video playing. If the video is not currently
+   * playing nothing will happen. If the current video is mute the action will be unmuted.
    *
    * @since 1.0
    */

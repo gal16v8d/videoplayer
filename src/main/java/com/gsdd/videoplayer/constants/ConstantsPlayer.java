@@ -22,9 +22,9 @@ public final class ConstantsPlayer {
    */
   public static final String VLC_LIB_PATH = validateRoute(null);
 
-  // Properties for titles of the menu and menuitem in aplication.
+  // Properties for titles of the menu and menuitem in application.
 
-  /** Text definition for admon menu. */
+  /** Text definition for admin menu. */
   public static final String MENU_TITLE = "Admon";
 
   /** Text definition for menu item file. */
@@ -76,8 +76,8 @@ public final class ConstantsPlayer {
   /** Extension for the captures. */
   public static final String SNAPSHOT_EXT = ".png";
 
-  /** Expresion to normalize routes. */
-  public static final String EXPRESION_SLASH = "[\\/]";
+  /** Expression to normalize routes. */
+  public static final String EXPRESSION_SLASH = "[\\/]";
 
   /** File route out if not defined will be the user home. */
   public static final String ROUTE_OUT = System.getProperty("user.home");
@@ -85,6 +85,8 @@ public final class ConstantsPlayer {
   public static final String OS_NAME = "os.name";
   public static final String OS_MAC = "mac";
   public static final String OS_WIN = "win";
+
+  public static final Stream<String> UBUNTU_PATTERN = Stream.of("nix", "nux", "ubuntu");
 
   /**
    * This method allows to get a route even with SO differences.
@@ -95,7 +97,7 @@ public final class ConstantsPlayer {
   public static String validateRoute(String route) {
     var osName = System.getProperty(OS_NAME).toLowerCase();
     var safeRoute = route == null ? getPathByOs(osName) : route;
-    String r = safeRoute.replaceAll(EXPRESION_SLASH, Matcher.quoteReplacement(File.separator));
+    String r = safeRoute.replaceAll(EXPRESSION_SLASH, Matcher.quoteReplacement(File.separator));
     if (!r.endsWith(File.separator)) {
       r += File.separator;
     }
@@ -106,9 +108,7 @@ public final class ConstantsPlayer {
     String result;
     if (osName.contains(OS_WIN)) {
       result = "D:/Programas/VideoLAN/VLC/";
-    } else if (osName.contains(OS_MAC)) {
-      result = "/usr/lib/vlc";
-    } else if (Stream.of("nix", "nux", "ubuntu").anyMatch(osName::contains)) {
+    } else if (osName.contains(OS_MAC) || UBUNTU_PATTERN.anyMatch(osName::contains)) {
       result = "/usr/lib/vlc";
     } else {
       result = null;
